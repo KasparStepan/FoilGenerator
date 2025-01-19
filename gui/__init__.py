@@ -1,1 +1,1 @@
-from .main_gui import main_page_gui
+from .main_gui import MainGui

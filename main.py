@@ -1,8 +1,9 @@
-from gui.main_gui import main_page_gui
+from gui import MainGui
 
 def main():
     print("App has started")
-    main_page_gui()
+    app = MainGui()
+    app.run()
 
 
 
