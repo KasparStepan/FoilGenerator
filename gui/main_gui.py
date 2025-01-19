@@ -91,19 +91,15 @@ class MainGui:
 
     def get_dirpath(self):
         d = fd.askdirectory()
-        print(d)
         d=d.replace('/','\\')
-        print(d)
         d=d+'\\'
-        print(d)
         self.directory_path.set(d)
 
     def transform_button(self):
         result = spaceclaim_transformation(self.file_path.get(),self.directory_path.get(),self.foil_name.get())
         print(result)
         if result == "succes":
-            print("succes")
-            print('Airfoil transformed sucessfully.')
+            print('Airfoil transformed sucessfully. GUI')
             self.status_label.config(text="Airfoil has been transformed")
 
 
