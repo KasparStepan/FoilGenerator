@@ -13,9 +13,13 @@ class MainGui:
         # Variables
         self.file_path = tk.StringVar(value="File location") #Location of original file from Airfoil Tools
         self.directory_path = tk.StringVar(value="Output directory") #Location of diretory in which modified airfoil will be saved
-        self.spaceclaim_option = tk.BooleanVar(value=False) #Option if Spaceclaim format will be outputed
         self.foil_name = tk.StringVar(value="New_airfoil") #Name of transformed airfoil
         self.status = tk.StringVar(value="No airfoil has been transformed") #Status of action
+
+        self.spaceclaim_option = tk.BooleanVar(value=False) #Option if Spaceclaim format will be outputed
+        self.xfoil_xflr_option = tk.BooleanVar(value=False) #Option if Xfoil xflr5 format will be outputed
+        self.creo_option = tk.BooleanVar(value=False) #Option if Creo format will be outputed
+        
 
         #Build GUI
 
@@ -41,12 +45,30 @@ class MainGui:
 
         self.check_spaceclaim = ttk.Checkbutton(master=self.window,
                                                 text="SpaceClaim",
-                                                command=self.spaceclaim_status,
+                                                command=self.transform_status,
                                                 variable=self.spaceclaim_option,
                                                 onvalue=True,
                                                 offvalue=False
                                                 )
         self.check_spaceclaim.pack()
+
+        self.check_xfoil_xflr = ttk.Checkbutton(master=self.window,
+                                                text="Xfoil/Xflr5",
+                                                command=self.transform_status,
+                                                variable=self.xfoil_xflr_option,
+                                                onvalue=True,
+                                                offvalue=False
+                                                )
+        self.check_xfoil_xflr.pack()
+
+        self.check_creo= ttk.Checkbutton(master=self.window,
+                                                text="Creo",
+                                                command=self.transform_status,
+                                                variable=self.creo_option,
+                                                onvalue=True,
+                                                offvalue=False
+                                                )
+        self.check_creo.pack()
         
         self.entry_dir_path = ttk.Entry(master=self.window,
                                         textvariable=self.directory_path,
@@ -104,10 +126,18 @@ class MainGui:
 
 
 
-    def spaceclaim_status(self):
+    def transform_status(self):
         print('SpaceClaim output status:'+ str(self.spaceclaim_option.get()))
+        print('xfoil/xflr5 output status:'+ str(self.xfoil_xflr_option.get()))
+        print('Creo output status:'+ str(self.creo_option.get()))
         
         if self.spaceclaim_option.get() == True:
             self.button_transform.config(state=tk.NORMAL)
-        elif self.spaceclaim_option.get() == False:
+        elif self.xfoil_xflr_option.get() == True:
+            self.button_transform.config(state=tk.NORMAL)
+        elif self.creo_option.get() == True:
+            self.button_transform.config(state=tk.NORMAL)
+        else:
             self.button_transform.config(state=tk.DISABLED)
+
+    
