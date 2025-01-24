@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 from tkinter import filedialog as fd
-from utils import spaceclaim_transformation
+from utils import File_handler
 
 
 class MainGui:
@@ -20,10 +20,12 @@ class MainGui:
         self.xfoil_xflr_option = tk.BooleanVar(value=False) #Option if Xfoil xflr5 format will be outputed
         self.creo_option = tk.BooleanVar(value=False) #Option if Creo format will be outputed
         
+        self.output_options = [self.spaceclaim_option.get(),self.xfoil_xflr_option.get(),self.creo_option.get()]
 
         #Build GUI
 
         self.create_widgets()
+        
 
     def create_widgets(self):
         #title in widget
@@ -92,12 +94,12 @@ class MainGui:
                                            )
         self.button_transform.pack()
 
-        self.status_label = tk.Label(text=self.status.get())
-        self.status_label.pack()    
+        #self.status_label = tk.Label(text=self.status.get())
+        #self.status_label.pack()    
 
 
         self.button_exit = ttk.Button(master=self.window,
-                                      text='Neplecha ukončena',
+                                      text='Quit',
                                       command=self.window.quit
                                       )
         self.button_exit.pack()
@@ -118,11 +120,11 @@ class MainGui:
         self.directory_path.set(d)
 
     def transform_button(self):
-        result = spaceclaim_transformation(self.file_path.get(),self.directory_path.get(),self.foil_name.get())
-        print(result)
-        if result == "succes":
-            print('Airfoil transformed sucessfully. GUI')
-            self.status_label.config(text="Airfoil has been transformed")
+        self.file_handler = File_handler(file_path_input=self.file_path.get(),
+                                         directory_path=self.directory_path.get(),
+                                         airfoil_name=self.foil_name.get(),\
+                                         output_option=self.output_options)
+        self.file_handler.save_airfoil()
 
 
 
@@ -130,6 +132,8 @@ class MainGui:
         print('SpaceClaim output status:'+ str(self.spaceclaim_option.get()))
         print('xfoil/xflr5 output status:'+ str(self.xfoil_xflr_option.get()))
         print('Creo output status:'+ str(self.creo_option.get()))
+
+        self.output_options = [self.spaceclaim_option.get(),self.xfoil_xflr_option.get(),self.creo_option.get()]
         
         if self.spaceclaim_option.get() == True:
             self.button_transform.config(state=tk.NORMAL)

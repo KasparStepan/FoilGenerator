@@ -47,26 +47,29 @@ class File_handler:
 
         index_to_remove = self.modified_file[self.modified_file['X_coordinate'] == self.text_to_remove].index[0]
 
-        self.data = self.modified_file.iloc[:(index_to_remove-1)]\
+        self.data = self.modified_file.iloc[:(index_to_remove-1)]
+        print(self.data)
         
     def save_airfoil(self):
          for key, value in self.output_setup.items():
              print(f"Output for {key} has started")
+             print(f"Spaceclaim will be ouptuted: {value[0]}")
              if value[0] == True:
-                 value[2]
+                 value[2]()
              print(f"Output for {key} has finished")
                  
          
          pass
     
     def spaceclaim_output(self):
+        print("Spaceclaim function in works")
         self.spaceclaim_output_airfoil['Column_1'] = [1]*self.data.shape[0]
         self.spaceclaim_output_airfoil['X'] = self.data.X_coordinate
         self.spaceclaim_output_airfoil['Y'] = self.data.Y_coordinate
         new_row = {'Column_1':'Polyline=true', 'X': '', 'Y':''}
 
         self.spaceclaim_output_airfoil = pd.concat([pd.DataFrame([new_row]),self.spaceclaim_output_airfoil],ignore_index=True)
-
+        print(self.directory_path+self.airfoil_name+self.output_setup['SpaceClaim'][1])
         self.spaceclaim_output_airfoil.to_csv(self.directory_path+self.airfoil_name+self.output_setup['SpaceClaim'][1]+'.txt', sep='\t', index=False,header=False)
 
 
@@ -77,9 +80,7 @@ class File_handler:
         pass
 
 
-test = File_handler(file_path_input='C:\\Users\\kaspa\\OneDrive - VUT\\01_PhD\\00_vyuka\\OCF\\Airfoils\\e423-il.csv')
 
-print(test.data)
 
 
 '''
